@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ImageForgeAI</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0b0f19;
+      color: white;
+    }
+
+    header {
+      padding: 20px;
+      text-align: center;
+      border-bottom: 1px solid #252b3a;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 28px;
+    }
+
+    header p {
+      color: #9ca3af;
+      margin-bottom: 0;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: auto;
+      padding: 25px 18px;
+    }
+
+    label {
+      display: block;
+      margin: 18px 0 8px;
+      font-weight: bold;
+    }
+
+    textarea,
+    select,
+    input[type="file"] {
+      width: 100%;
+      padding: 14px;
+      border-radius: 10px;
+      border: 1px solid #343b4d;
+      background: #151a27;
+      color: white;
+      font-size: 15px;
+    }
+
+    textarea {
+      min-height: 140px;
+      resize: vertical;
+    }
+
+    .options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 22px;
+      padding: 15px;
+      border: none;
+      border-radius: 10px;
+      background: #6d5dfc;
+      color: white;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #5848e8;
+    }
+
+    .result {
+      margin-top: 30px;
+      min-height: 250px;
+      border: 1px dashed #3c4559;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #8f98aa;
+      padding: 20px;
+    }
+
+    .result img {
+      max-width: 100%;
+      border-radius: 12px;
+    }
+
+    .loading {
+      display: none;
+      margin-top: 15px;
+      text-align: center;
+      color: #a5b4fc;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      color: #6b7280;
+      font-size: 13px;
+    }
+
+    @media (max-width: 600px) {
+      .options {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>✨ ImageForgeAI</h1>
+  <p>AI Image Generator</p>
+</header>
+
+<div class="container">
+
+  <label for="prompt">Deskripsi gambar</label>
+
+  <textarea
+    id="prompt"
+    placeholder="Contoh: Gadis desa cantik menjadi istri CEO, memakai gaun elegan, suasana drama romantis China, cinematic, highly detailed..."
+  ></textarea>
+
+  <div class="options">
+
+    <div>
+      <label for="ratio">Rasio</label>
+
+      <select id="ratio">
+        <option value="1:1">1:1 — Persegi</option>
+        <option value="9:16" selected>9:16 — Portrait</option>
+        <option value="16:9">16:9 — Landscape</option>
+        <option value="4:3">4:3</option>
+        <option value="3:4">3:4</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="quality">Kualitas</label>
+
+      <select id="quality">
+        <option value="standard">Standard</option>
+        <option value="high" selected>High</option>
+        <option value="ultra">Ultra</option>
+      </select>
+    </div>
+
+  </div>
+
+  <label for="reference">Gambar referensi (opsional)</label>
+
+  <input
+    type="file"
+    id="reference"
+    accept="image/*"
+  >
+
+  <button onclick="generateImage()">
+    ✨ Generate Image
+  </button>
+
+  <div class="loading" id="loading">
+    ⏳ Sedang menyiapkan gambar...
+  </div>
+
+  <div class="result" id="result">
+    Hasil gambar akan muncul di sini
+  </div>
+
+</div>
+
+<footer>
+  ImageForgeAI © 2026
+</footer>
+
+<script>
+
+function generateImage() {
+
+  const prompt = document.getElementById("prompt").value.trim();
+  const ratio = document.getElementById("ratio").value;
+  const quality = document.getElementById("quality").value;
+
+  const result = document.getElementById("result");
+  const loading = document.getElementById("loading");
+
+  if (!prompt) {
+    alert("Silakan masukkan deskripsi gambar terlebih dahulu.");
+    return;
+  }
+
+  loading.style.display = "block";
+
+  result.innerHTML = "";
+
+  /*
+    TEMPAT API IMAGE GENERATOR AKAN DIPASANG.
+
+    Prompt:
+    prompt
+
+    Rasio:
+    ratio
+
+    Kualitas:
+    quality
+  */
+
+  setTimeout(function() {
+
+    loading.style.display = "none";
+
+    result.innerHTML = `
+      <div>
+        <h3>Prompt diterima ✅</h3>
+        <p>${escapeHtml(prompt)}</p>
+        <p>Rasio: ${ratio}</p>
+        <p>Kualitas: ${quality}</p>
+        <small>
+          API generator belum dihubungkan.
+        </small>
+      </div>
+    `;
+
+  }, 1000);
+}
+
+function escapeHtml(text) {
+  const div = document.createElement("div");
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+</script>
+
+</body>
+</html>
